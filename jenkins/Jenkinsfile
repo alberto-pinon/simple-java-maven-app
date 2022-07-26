@@ -10,7 +10,7 @@ pipeline {
     //     maven 'Maven3' 
     //     jdk 'jdk8' 
     // }
-    // stages {
+    stages {
         stage('build') {
             steps {
                 echo 'Building the application...'
