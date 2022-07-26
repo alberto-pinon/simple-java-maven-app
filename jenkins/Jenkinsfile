@@ -42,23 +42,25 @@ pipeline {
             steps {
                 echo 'Uploading the application to nexus...'
 
-                def mavenPom = readMavenPom 'pom.xml'
+                script {
+                    def mavenPom = readMavenPom 'pom.xml'
 
-                nexusArtifactUploader artifacts: [
-                    [
-                        artifactId: "${mavenPom.artifactId}", 
-                        classifier: '', 
-                        file: "target/${mavenPom.name}-${mavenPom.version}.${mavenPom.packaging}", 
-                        type: "${mavenPom.packaging}"
-                    ]
-                ], 
-                credentialsId: 'nexus', 
-                groupId: "${mavenPom.groupId}", 
-                nexusUrl: 'localhost:8881', 
-                nexusVersion: 'nexus3', 
-                protocol: 'http', 
-                repository: 'simple-maven-app-release', 
-                version: '1.0'
+                    nexusArtifactUploader artifacts: [
+                        [
+                            artifactId: "${mavenPom.artifactId}", 
+                            classifier: '', 
+                            file: "target/${mavenPom.name}-${mavenPom.version}.${mavenPom.packaging}", 
+                            type: "${mavenPom.packaging}"
+                        ]
+                    ], 
+                    credentialsId: 'nexus', 
+                    groupId: "${mavenPom.groupId}", 
+                    nexusUrl: 'localhost:8881', 
+                    nexusVersion: 'nexus3', 
+                    protocol: 'http', 
+                    repository: 'simple-maven-app-release', 
+                    version: '1.0'
+                }
             }
         }
     }
