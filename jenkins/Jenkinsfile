@@ -40,13 +40,12 @@ pipeline {
 
         stage('upload to nexus') {
             steps {
-                echo 'Uploading the application to nexus...'
-
                 script {
+                    echo 'Uploading the application to nexus...'
                     def mavenPom = readMavenPom file: 'pom.xml'
                     nexusArtifactUploader artifacts: [
                         [
-                            artifactId: "${mavenPom.artifactId}", 
+                            artifactId: "my-app", 
                             classifier: '', 
                             file: "target/${mavenPom.name}-${mavenPom.version}.${mavenPom.packaging}", 
                             type: "${mavenPom.packaging}"
