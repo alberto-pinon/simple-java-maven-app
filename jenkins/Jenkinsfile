@@ -37,6 +37,27 @@ pipeline {
                 sh './jenkins/scripts/deliver.sh'
             }
         }
+
+        stage('upload to nexus') {
+            steps {
+                echo 'Uploading the application to nexus...'
+                nexusArtifactUploader artifacts: [
+                    [
+                        artifactId: 'my-app', 
+                        classifier: '', 
+                        file: 'target/my-app-1.0-SNAPSHOT.jar', 
+                        type: 'jar'
+                    ]
+                ], 
+                credentialsId: 'nexus', 
+                groupId: 'com.mycompany.app', 
+                nexusUrl: 'localhost:8881', 
+                nexusVersion: 'nexus3', 
+                protocol: 'http', 
+                repository: 'http://localhost:8881/repository/simple-maven-app-release/', 
+                version: '1.0-SNAPSHOT'
+            }
+        }
     }
 
     post {
