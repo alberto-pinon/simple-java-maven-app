@@ -41,16 +41,19 @@ pipeline {
         stage('upload to nexus') {
             steps {
                 echo 'Uploading the application to nexus...'
+
+                def mavenPom = readMavenPom 'pom.xml'
+
                 nexusArtifactUploader artifacts: [
                     [
-                        artifactId: 'my-app', 
+                        artifactId: "${mavenPom.artifactId}", 
                         classifier: '', 
-                        file: 'target/my-app-1.0.jar', 
-                        type: 'jar'
+                        file: "target/${mavenPom.name}-${mavenPom.version}.${mavenPom.packaging}", 
+                        type: "${mavenPom.packaging}"
                     ]
                 ], 
                 credentialsId: 'nexus', 
-                groupId: 'com.mycompany.app', 
+                groupId: "${mavenPom.groupId}", 
                 nexusUrl: 'localhost:8881', 
                 nexusVersion: 'nexus3', 
                 protocol: 'http', 
