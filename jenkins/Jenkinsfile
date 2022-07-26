@@ -47,7 +47,7 @@ pipeline {
                         [
                             artifactId: "my-app", 
                             classifier: '', 
-                            file: "target/${mavenPom.name}-${mavenPom.version}.${mavenPom.packaging}", 
+                            file: "target/my-app-${mavenPom.version}.${mavenPom.packaging}", 
                             type: "${mavenPom.packaging}"
                         ]
                     ], 
